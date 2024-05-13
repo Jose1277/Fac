@@ -1,0 +1,25 @@
+.globl main
+
+main:
+	li a7, 5
+	ecall
+	
+	add t0, x0, a0
+	
+	li a7, 5
+	ecall
+	
+	add t1, x0, a0
+	
+	add t2, t0, t1
+	
+	li a7, 1
+	add a0, x0, t2
+	ecall
+	
+	li a7, 4
+	la a0, texto
+	ecall
+
+.data 
+	texto: .string "\n"

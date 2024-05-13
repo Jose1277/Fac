@@ -1,0 +1,168 @@
+.globl main
+
+main:
+	#le e armazena a em t0
+	li a7, 5 
+	ecall
+	add t0, zero, a0
+	
+	#le e armazena b em t1
+	li a7, 5
+	ecall
+	add t1, zero, a0
+	
+	#le e armazena c em t2
+	li a7, 5
+	ecall
+	add t2, zero, a0
+	
+	#operacoes
+	#adicao
+	li a7, 4
+	la a0, textoAdd
+	ecall
+	add t3, t0, t1
+	li a7, 1
+	add a0, zero, t3
+	ecall
+	#quebra de linha
+	li a7, 4
+	la a0, texto
+	ecall
+	#reseta t3
+	addi t3, zero, 0
+	
+	#subtracao
+	li a7, 4
+	la a0, textoSub
+	ecall
+	sub t3, t0, t1
+	li a7, 1
+	add a0, zero, t3
+	ecall
+	#quebra de linha
+	li a7, 4
+	la a0, texto
+	ecall
+	#reseta t3
+	addi t3, zero, 0
+	
+	#and
+	li a7, 4
+	la a0, textoAnd
+	ecall
+	and t3, t0, t1
+	li a7, 1
+	add a0, zero, t3
+	ecall
+	#quebra de linha
+	li a7, 4
+	la a0, texto
+	ecall
+	#reseta t3
+	addi t3, zero, 0
+	
+	#or
+	li a7, 4
+	la a0, textoOr
+	ecall
+	or t3, t0, t1
+	li a7, 1
+	add a0, zero, t3
+	ecall
+	#quebra de linha
+	li a7, 4
+	la a0, texto
+	ecall
+	#reseta t3
+	addi t3, zero, 0
+	
+	#xor
+	li a7, 4
+	la a0, textoXor
+	ecall
+	xor t3, t0, t1
+	li a7, 1
+	add a0, zero, t3
+	ecall
+	#quebra de linha
+	li a7, 4
+	la a0, texto
+	ecall
+	#reseta t3
+	addi t3, zero, 0
+	
+	#mask
+	li a7, 4
+	la a0, textoMask
+	ecall
+	andi t4, t2, 31
+	li a7, 1
+	add a0, zero, t4
+	ecall
+	#quebra de linha
+	li a7, 4
+	la a0, texto
+	ecall
+	
+	#sll
+	li a7, 4
+	la a0, textoSll
+	ecall
+	li a7, 4
+	la a0, textoAbre
+	ecall
+	li a7, 1
+	add a0, zero, t4
+	ecall
+	li a7, 4
+	la a0, textoFecha
+	ecall
+	sll t3, t0, t4
+	li a7, 1
+	add a0, zero, t3
+	ecall
+	#quebra de linha
+	li a7, 4
+	la a0, texto
+	ecall
+	#reseta t3
+	addi t3, zero, 0
+	
+	#srl
+	li a7, 4
+	la a0, textoSrl
+	ecall
+	li a7, 4
+	la a0, textoAbre
+	ecall
+	li a7, 1
+	add a0, zero, t4
+	ecall
+	li a7, 4
+	la a0, textoFecha
+	ecall
+	srl t3, t1, t4
+	li a7, 1
+	add a0, zero, t3
+	ecall
+	#quebra de linha
+	li a7, 4
+	la a0, texto
+	ecall
+	
+	
+	
+	
+.data 
+	texto: .string "\n"
+	textoAdd: .string "ADD: "
+	textoSub: .string "SUB: "
+	textoAnd: .string "AND: "
+	textoOr: .string "OR: "
+	textoXor: .string "XOR: "
+	textoMask: .string "MASK: "
+	textoSll: .string "SLL"
+	textoAbre: .string "("
+	textoFecha: .string "): "
+	textoSrl: .string "SRL"

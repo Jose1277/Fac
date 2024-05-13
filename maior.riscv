@@ -1,0 +1,41 @@
+.globl main
+
+main:
+	#le e armazena n
+	li a7, 5
+	ecall
+	add t0, zero, a0
+	
+	#contador
+	addi t1, zero, 0
+	
+	#maiorNumero
+	li t2, -2147483638
+	j loop
+	
+defineMaior:
+	mv t2, t3
+	addi t3, zero, 0
+	j saiIf
+		
+loop:
+	bge t1, t0, out_loop
+	li a7, 5
+	ecall
+	add t3, zero, a0
+	bgt t3, t2, defineMaior
+saiIf:
+	addi t1, t1, 1
+	j loop
+
+out_loop:
+	li a7, 1
+	add a0, zero, t2
+	ecall
+	li a7, 4
+	la a0, texto
+	ecall
+
+
+.data
+	texto: .string "\n"
