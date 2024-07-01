@@ -1,0 +1,65 @@
+.data
+	string_nao: .string "nao"
+	string_sim: .string "sim"
+	string_invalida: .string "Entrada invalida."
+	string_quebra: .string "\n"
+	
+.text
+.globl main
+
+main:
+	li a7, 5 #carrega o codigo para leitura de inteiro no registrador a7
+	ecall #chamada de sistema
+	add t0, a0, zero #coloca a entrada no registrador t0
+	
+	ble t0, zero, invalida # se t0(entrada) <= 0 entrada inválida
+	
+	addi t4, zero, 2
+	beq t0, t4, primo
+	
+	andi s0, t0, 1
+	beq s0, zero, par
+	
+	addi t3, zero, 1
+	add s1, zero, t0
+	j impar
+	
+	
+invalida:
+	addi a7, zero, 4 #chamada de sistema para imprimir string
+	la a0, string_invalida #carrega string para o a0
+	ecall
+	addi a7, zero, 4
+	la a0, string_quebra #print quebra de linha
+	ecall
+	li a7, 10 #termina o programa
+	ecall
+	
+par:
+	addi a7, zero, 4 #chamada de sistema para imprimir string
+	la a0, string_nao #carrega string para o a0
+	ecall
+	addi a7, zero, 4
+	la a0, string_quebra #print quebra de linha
+	ecall
+	li a7, 10 #termina o programa
+	ecall
+	
+impar:
+	addi s1, s1, -2 #diminui -2 em s1 a cada loop, fazemos isso porque a cada dois numeros 1 é impar
+	beq s1, t3, primo #se s1 chegar em 1 sem problemas no loop é um primo
+	rem t2, t0, s1 #coloca o resto da divisão t0 / s1 em t2
+	beq t2, zero, par #se o resto for igual a zero ele não é primo pois é divisivel por alguém
+	j impar #volta para o loop
+	
+primo:
+	addi a7, zero, 4 #chamada de sistema para imprimir string
+	la a0, string_sim #carrega string para o a0
+	ecall
+	addi a7, zero, 4
+	la a0, string_quebra #print quebra de linha
+	ecall
+	li a7, 10 #termina o programa
+	ecall
+	
+	

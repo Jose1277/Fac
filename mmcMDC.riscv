@@ -1,0 +1,68 @@
+.data
+	string_quebra: .string "\n"
+	string_invalida: .string "Entrada invalida."
+
+.text
+.globl main
+
+main:
+	addi s0, zero, 1 #registrador com 1
+	li a7, 5 #chamada de ler inteiro
+	ecall
+	add t0, a0, zero #coloca o inteiro lido (a) em t0
+	
+	li a7, 5 #chamada de ler inteiro
+	ecall
+	add t1, a0, zero #coloca o inteiro lido (b) em t1
+	
+	ble t0, s0, invalido #se t0 for menor ou igual a 1 ele é inválido
+	ble t1, s0, invalido #se t1 for menor ou igual a 1 inválido
+	
+	addi t2, zero, 0 #contador
+	addi t3, zero, 0 #mdc
+	addi t4, zero, 0 #mmc
+	
+mdc:
+	addi t2, t2, 1 #incrementa contador em 1
+	rem s1, t0, t2 #verifica se t0 divide por t2
+	rem s2, t1, t2 #verifica se t1 divide por t2
+	
+	beq s1, zero, atualizaMDC1
+mdc_print:
+	beq t0, t2, print_resultado
+	beq t1, t2, print_resultado
+	
+	j mdc
+	
+atualizaMDC1:
+	beq s2, zero, atualizaMDC
+	j mdc_print
+
+atualizaMDC:
+	add t3, zero, t2 #coloca o mdc em t3
+	j mdc
+	
+invalido:
+	li a7, 4 #chamada para printar string
+	la a0, string_invalida #armazena em a0 a string a ser printada
+	ecall
+	
+	li a7, 4
+	la a0, string_quebra
+	ecall
+	
+	li a7, 10
+	ecall
+	
+print_resultado:
+	li a7, 1
+	add a0, zero, t3
+	ecall
+	li a7, 4
+	la a0, string_quebra
+	ecall
+	
+	j mmc
+	
+	
+	
